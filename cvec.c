@@ -4,6 +4,12 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
+static void cvec_debug(cvec* vec, const char* format);
+
+int main(int argc, char *argv[]) {
+	return 0;
+}
+
 cvec* new_cvec() {
 	cvec* temp = (cvec*)malloc(sizeof(cvec));
 	temp->capacity = 0;
