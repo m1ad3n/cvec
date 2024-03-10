@@ -1,4 +1,7 @@
-cmake_minimum_required(VERSION 3.28.3)
-
+cmake_minimum_required(VERSION 3.25)
 project(cvec)
-add_executable(cvec cvec.c)
+
+add_library(cvec SHARED cvec.c)
+
+install(TARGETS cvec DESTINATION lib)
+install(FILES cvec.h DESTINATION include)
