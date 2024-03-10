@@ -19,6 +19,7 @@ int cvec_push(cvec* vec, void* item);
 int cvec_pop(cvec* vec);
 int cvec_remove(cvec* vec, unsigned int index);
 int cvec_clean(cvec* vec);
+int cvec_insert(cvec* vec, unsigned int index, void* item);
 
 void* cvec_iter(cvec* vec);
 void* cvec_at(cvec* vec, int index);

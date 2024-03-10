@@ -7,6 +7,13 @@
 static void cvec_debug(cvec* vec, const char* format);
 
 int main(int argc, char *argv[]) {
+	cvec* vec = cvec_from(5, 34, 22, 88, 99, 12);
+
+	cvec_debug(vec, "%d");
+	cvec_insert(vec, 5, (void*)567);
+	cvec_debug(vec, "%d");
+
+	cvec_free(vec);
 	return 0;
 }
 
@@ -14,7 +21,7 @@ cvec* new_cvec() {
 	cvec* temp = (cvec*)malloc(sizeof(cvec));
 	temp->capacity = 0;
 	temp->size = 0;
-	temp->items = (void**)malloc(temp->capacity);
+	temp->items = (void**)malloc(0);
 	return temp;
 }
 
@@ -40,19 +47,35 @@ void* cvec_back(cvec* vec) {
 	return vec->items[0];
 }
 
+int cvec_insert(cvec* vec, unsigned int index, void* item) {
+	if (!vec || vec->size < index) return false;
+	else if (vec->size == index) {
+		cvec_push(vec, item);
+		return true;
+	}
+
+	cvec_resize(vec, (vec->size + 1) + sizeof(item));
+	for (int i = vec->size; i > index; i--)
+		vec->items[i] = vec->items[i - 1];
+	vec->items[index] = item;
+	vec->size++;
+
+	return true;
+}
+
 int cvec_remove(cvec* vec, unsigned int index) {
     if (!vec || vec->size <= index || vec->size < 1) return false;
     for (int i = index; i < vec->size - 1; i++)
         vec->items[i] = vec->items[i + 1];
 
     vec->size--;
-    vec->items = (void**)realloc(vec->items, vec->size * sizeof(void*));
+    cvec_resize(vec, vec->size * sizeof(void*));
     return true;
 }
 
 int cvec_clean(cvec* vec) {
     if (!vec || vec->size < 1) return false;
-    vec->items = (void**)realloc(vec->items, 0);
+    cvec_resize(vec, 0);
     vec->size = 0;
     return true;
 }
@@ -65,11 +88,11 @@ static void cvec_debug(cvec* vec, const char* format) {
 
     printf("[");
     for (int i = 0; i < vec->size - 1; i++) {
-        printf(format, cvec_iter(vec));
+        printf(format, vec->items[i]);
         printf(" ");
     }
 
-    printf(format, cvec_iter(vec));
+    printf(format, cvec_front(vec));
     printf("]\n");
 }
 
@@ -77,7 +100,7 @@ int cvec_resize(cvec* vec, unsigned int capacity) {
 	if (!vec) return false;
 	if (vec->items == NULL) vec->items = (void**)malloc(capacity);
 	else {
-		vec->items = (void**)realloc(vec->items, (vec->size + 1) * capacity);
+		vec->items = (void**)realloc(vec->items, capacity);
 		vec->capacity = capacity;
 	}
 	return true;
@@ -86,7 +109,7 @@ int cvec_resize(cvec* vec, unsigned int capacity) {
 int cvec_push(cvec* vec, void *item) {
 	if (!vec || !item) return false;
 
-	cvec_resize(vec, sizeof(item));
+	cvec_resize(vec, (vec->size + 1) * sizeof(item));
 	vec->items[vec->size] = item;
 	vec->size++;
 
@@ -108,7 +131,7 @@ int cvec_free(cvec* vec) {
 int cvec_pop(cvec* vec) {
 	if (vec->size < 1) return false;
 	vec->size--;
-	vec->items = (void**)realloc(vec->items, (vec->size) * vec->capacity);
+	cvec_resize(vec, (vec->size) * sizeof(void*));
 	return true;
 }
 
