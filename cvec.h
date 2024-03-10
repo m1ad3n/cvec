@@ -14,7 +14,7 @@ typedef struct {
     unsigned int size;
 } cvec;
 
-cvec* new_cvec();
+cvec* cvec_new();
 cvec* cvec_from(int count, ...);
 
 int cvec_resize(cvec* vec, unsigned int capacity);

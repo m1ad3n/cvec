@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
-cvec* new_cvec() {
+cvec* cvec_new() {
 	cvec* temp = (cvec*)malloc(sizeof(cvec));
 	temp->capacity = 0;
 	temp->size = 0;
@@ -25,7 +25,7 @@ cvec* new_cvec() {
 }
 
 cvec* cvec_from(int count, ...) {
-    cvec* temp = new_cvec();
+    cvec* temp = cvec_new();
     va_list list;
     va_start(list, count);
 
