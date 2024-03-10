@@ -1,7 +1,6 @@
 #include "cvec.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <stdarg.h>
 
 static void cvec_debug(cvec* vec, const char* format);
