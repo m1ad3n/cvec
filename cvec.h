@@ -24,7 +24,6 @@ void* cvec_iter(cvec* vec);
 void* cvec_at(cvec* vec, int index);
 void* cvec_front(cvec* vec);
 void* cvec_back(cvec* vec);
-void cvec_debug(cvec* vec, const char* format);
 
 #ifdef __cplusplus
 }

@@ -51,7 +51,7 @@ int cvec_clean(cvec* vec) {
     return true;
 }
 
-void cvec_debug(cvec* vec, const char* format) {
+static void cvec_debug(cvec* vec, const char* format) {
     if (vec->size < 1) {
         printf("[]\n");
         return;
