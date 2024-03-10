@@ -1,0 +1,5 @@
+**/build
+**/*.cbp
+**/bin
+**/obj
+**/*.depend
