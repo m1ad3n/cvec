@@ -20,7 +20,7 @@ int cvec_pop(cvec* vec);
 int cvec_remove(cvec* vec, unsigned int index);
 int cvec_clean(cvec* vec);
 
-void* cvec_aoit(cvec* vec);
+void* cvec_iter(cvec* vec);
 void* cvec_at(cvec* vec, int index);
 void* cvec_front(cvec* vec);
 void* cvec_back(cvec* vec);

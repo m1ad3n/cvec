@@ -59,11 +59,11 @@ void cvec_debug(cvec* vec, const char* format) {
 
     printf("[");
     for (int i = 0; i < vec->size - 1; i++) {
-        printf(format, cvec_aoit(vec));
+        printf(format, cvec_iter(vec));
         printf(" ");
     }
 
-    printf(format, cvec_aoit(vec));
+    printf(format, cvec_iter(vec));
     printf("]\n");
 }
 
@@ -111,7 +111,7 @@ void* cvec_at(cvec* vec, int index) {
 	return vec->items[index];
 }
 
-void* cvec_aoit(cvec* vec) {
+void* cvec_iter(cvec* vec) {
     if (vec->size < 1) return NULL;
 	static int count = 0;
 	if (count >= vec->size)
