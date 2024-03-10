@@ -7,20 +7,21 @@ extern "C" {
 
 typedef struct {
     void** items;
-    int capacity;
-    int size;
+    unsigned int capacity;
+    unsigned int size;
 } cvec;
 
 cvec* new_cvec();
 cvec* cvec_from(int count, ...);
 
-int cvec_resize(cvec* vec, int capacity);
+int cvec_resize(cvec* vec, unsigned int capacity);
 int cvec_push(cvec* vec, void* item);
 int cvec_pop(cvec* vec);
+int cvec_remove(cvec* vec, unsigned int index);
 
 void* cvec_aoit(cvec* vec);
 void* cvec_at(cvec* vec, int index);
-void cvec_debug(cvec* vec);
+void cvec_debug(cvec* vec, const char* format);
 
 #ifdef __cplusplus
 }
