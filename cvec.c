@@ -4,19 +4,6 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
-int main(int argc, char *argv[]) {
-    cvec* vec = cvec_from(5, "Mladen", "Pero", "Mico", "Mihailo", "Stefan");
-    cvec_debug(vec, "%s");
-    cvec_remove(vec, 0);
-    cvec_remove(vec, 0);
-    cvec_remove(vec, 0);
-    cvec_remove(vec, 0);
-    cvec_remove(vec, 0);
-    cvec_debug(vec, "%s");
-
-    return 0;
-}
-
 cvec* new_cvec() {
 	cvec* temp = (cvec*)malloc(sizeof(cvec));
 	temp->capacity = 0;
@@ -37,6 +24,16 @@ cvec* cvec_from(int count, ...) {
     return temp;
 }
 
+void* cvec_front(cvec* vec) {
+	if (!vec || vec->size < 1) return NULL;
+	return vec->items[vec->size - 1];
+}
+
+void* cvec_back(cvec* vec) {
+	if (!vec || vec->size < 1) return NULL;
+	return vec->items[0];
+}
+
 int cvec_remove(cvec* vec, unsigned int index) {
     if (!vec || vec->size <= index || vec->size < 1) return false;
     for (int i = index; i < vec->size - 1; i++)
@@ -44,6 +41,13 @@ int cvec_remove(cvec* vec, unsigned int index) {
 
     vec->size--;
     vec->items = (void**)realloc(vec->items, vec->size * sizeof(void*));
+    return true;
+}
+
+int cvec_clean(cvec* vec) {
+    if (!vec || vec->size < 1) return false;
+    vec->items = (void**)realloc(vec->items, 0);
+    vec->size = 0;
     return true;
 }
 
@@ -103,6 +107,7 @@ int cvec_pop(cvec* vec) {
 }
 
 void* cvec_at(cvec* vec, int index) {
+    if (!vec || vec->size <= index) return NULL;
 	return vec->items[index];
 }
 
